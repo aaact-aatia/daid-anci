@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default('en') }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="{% if description %}{{ description }}{% else %}AAACT Accessibility Digital Design Team{% endif %}" />
+    <title>{% if title %}{{ title }} | {% endif %}AAACT DAID</title>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    {% include "partials/header.njk" %}
+
+    <main id="main">
+      {{ content | safe }}
+    </main>
+
+    {% include "partials/footer.njk" %}
+  </body>
+</html>
