@@ -8,7 +8,7 @@
 
 ## Project purpose
 
-This project creates a simple, maintainable, and accessible bilingual website for the AAACT Accessibility Digital Design Team.
+This project creates a simple, maintainable, and accessible bilingual website for the AAACT Digital Accessibility and Inclusive Design (DAID) Team.
 
 The site will:
 
@@ -201,7 +201,7 @@ This project should remain flexible enough to grow into a fuller team or service
 
 ## Objectif du projet
 
-Ce projet vise à créer un site web bilingue simple, maintenable et accessible pour l’équipe de conception numérique accessible AAACT.
+Ce projet vise à créer un site web bilingue simple, maintenable et accessible pour l'équipe d'accessibilité numérique et conception inclusive (ANCI) d'AAACT.
 
 Le site devra :
 
