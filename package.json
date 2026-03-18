@@ -4,8 +4,8 @@
   "private": true,
   "description": "AAACT Accessibility Digital Design Team bilingual website",
   "scripts": {
-    "dev": "eleventy --serve --input=src --output=dist",
-    "build": "eleventy --input=src --output=dist"
+    "dev": "eleventy --serve",
+    "build": "eleventy"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2"
