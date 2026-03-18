@@ -34,6 +34,33 @@ The site will:
 
 ---
 
+## Quick start
+
+Requirements:
+
+- Node.js 20+
+- npm 10+
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start local development server:
+
+```bash
+npm run dev
+```
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+---
+
 ## Project principles
 
 - Accessibility first
@@ -197,6 +224,33 @@ Le site devra :
 - Système de design GC (composants web)
 - GitHub
 - Netlify
+
+---
+
+## Démarrage rapide
+
+Prérequis :
+
+- Node.js 20+
+- npm 10+
+
+Installer les dépendances :
+
+```bash
+npm install
+```
+
+Démarrer le serveur de développement local :
+
+```bash
+npm run dev
+```
+
+Créer une version de production :
+
+```bash
+npm run build
+```
 
 ---
 
