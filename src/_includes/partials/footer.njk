@@ -1,5 +1,14 @@
 <footer>
   <div class="site-footer">
-    <p>&copy; 2026 AAACT Accessibility Digital Design Team. All rights reserved.</p>
+    <p>
+      &copy; {{ site.year }}
+      {% if page.lang == 'fr' %}
+      {{ site.titleFr }}.
+      Tous droits réservés.
+      {% else %}
+      {{ site.title }}.
+      All rights reserved.
+      {% endif %}
+    </p>
   </div>
 </footer>

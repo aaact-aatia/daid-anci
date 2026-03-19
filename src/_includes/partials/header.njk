@@ -1,15 +1,19 @@
 <header>
   <div class="site-header">
     <h1 class="site-title">
-      <a href="/">AAACT DAID</a>
+      <a href="{% if page.lang == 'fr' %}/fr/{% else %}/en/{% endif %}">
+        {% if page.lang == 'fr' %}{{ site.titleFr }}{% else %}{{ site.title }}{% endif %}
+      </a>
     </h1>
-    <nav aria-label="Main navigation">
+    <nav aria-label="{% if page.lang == 'fr' %}Navigation principale{% else %}Main navigation{% endif %}">
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about/">About</a></li>
-        <li><a href="/services/">Services</a></li>
-        <li><a href="/resources/">Resources</a></li>
-        <li><a href="/contact/">Contact</a></li>
+        {% if page.lang == 'fr' %}
+        <li><a href="/fr/">Accueil</a></li>
+        <li><a href="/fr/a-propos/">À propos</a></li>
+        {% else %}
+        <li><a href="/en/">Home</a></li>
+        <li><a href="/en/about/">About</a></li>
+        {% endif %}
       </ul>
     </nav>
   </div>

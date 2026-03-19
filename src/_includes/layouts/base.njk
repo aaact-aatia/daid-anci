@@ -3,8 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="{% if description %}{{ description }}{% else %}AAACT Accessibility Digital Design Team{% endif %}" />
-    <title>{% if title %}{{ title }} | {% endif %}AAACT DAID</title>
+    <meta name="description" content="{% if description %}{{ description }}{% else %}{% if page.lang == 'fr' %}{{ site.descriptionFr }}{% else %}{{ site.description }}{% endif %}{% endif %}" />
+    <title>{% if title %}{{ title }} | {% endif %}{% if page.lang == 'fr' %}{{ site.titleFr }}{% else %}{{ site.title }}{% endif %}</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.design-system.canada.ca/@gcds-core/css-shortcuts@1.0.1/dist/gcds-css-shortcuts.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.design-system.canada.ca/@gcds-core/components@1.0.0/dist/gcds/gcds.css"
+    />
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to main content</a>
@@ -16,5 +25,10 @@
     </main>
 
     {% include "partials/footer.njk" %}
+
+    <script
+      type="module"
+      src="https://cdn.design-system.canada.ca/@gcds-core/components@1.0.0/dist/gcds/gcds.esm.js"
+    ></script>
   </body>
 </html>
