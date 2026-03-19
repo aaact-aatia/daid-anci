@@ -1,14 +1,17 @@
-<footer>
-  <div class="site-footer">
-    <p>
-      &copy; {{ site.year }}
-      {% if page.lang == 'fr' %}
-      {{ site.titleFr }}.
-      Tous droits réservés.
-      {% else %}
-      {{ site.title }}.
-      All rights reserved.
-      {% endif %}
-    </p>
-  </div>
-</footer>
+{% if lang == 'fr' %}
+<gcds-footer
+  lang="fr"
+  display="full"
+  contextual-heading="{{ site.titleFr }}"
+  contextual-links='{"Accueil":"/fr/","A propos":"/fr/a-propos/"}'
+>
+</gcds-footer>
+{% else %}
+<gcds-footer
+  lang="en"
+  display="full"
+  contextual-heading="{{ site.title }}"
+  contextual-links='{"Home":"/en/","About":"/en/about/"}'
+>
+</gcds-footer>
+{% endif %}
