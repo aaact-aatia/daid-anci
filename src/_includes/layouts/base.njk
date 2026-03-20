@@ -25,34 +25,7 @@
     />
   </head>
   <body>
-    {% if lang == 'fr' %}
-      {% if page.url == '/fr/a-propos/' %}
-        {% set langHref = '/en/about/' %}
-      {% else %}
-        {% set langHref = '/en/' %}
-      {% endif %}
-    {% else %}
-      {% if page.url == '/en/about/' %}
-        {% set langHref = '/fr/a-propos/' %}
-      {% else %}
-        {% set langHref = '/fr/' %}
-      {% endif %}
-    {% endif %}
-
-    <gcds-header lang-href="{{ langHref }}" skip-to-href="#main-content">
-      <gcds-search slot="search"></gcds-search>
-      {% if page.url == '/en/about/' or page.url == '/fr/a-propos/' %}
-      <gcds-breadcrumbs slot="breadcrumb">
-        {% if lang == 'fr' %}
-        <gcds-breadcrumbs-item href="/fr/">{{ site.titleFr }}</gcds-breadcrumbs-item>
-        <gcds-breadcrumbs-item href="/fr/a-propos/">A propos</gcds-breadcrumbs-item>
-        {% else %}
-        <gcds-breadcrumbs-item href="/en/">{{ site.title }}</gcds-breadcrumbs-item>
-        <gcds-breadcrumbs-item href="/en/about/">About</gcds-breadcrumbs-item>
-        {% endif %}
-      </gcds-breadcrumbs>
-      {% endif %}
-    </gcds-header>
+    {% include "partials/header.njk" %}
 
     <gcds-container id="main-content" layout="page" tag="main">
       {% if title %}
@@ -64,23 +37,7 @@
       {{ content | safe }}
     </gcds-container>
 
-    {% if lang == 'fr' %}
-    <gcds-footer
-      lang="fr"
-      display="full"
-      contextual-heading="{{ site.titleFr }}"
-      contextual-links='{"Accueil":"/fr/","A propos":"/fr/a-propos/"}'
-    >
-    </gcds-footer>
-    {% else %}
-    <gcds-footer
-      lang="en"
-      display="full"
-      contextual-heading="{{ site.title }}"
-      contextual-links='{"Home":"/en/","About":"/en/about/"}'
-    >
-    </gcds-footer>
-    {% endif %}
+    {% include "partials/footer.njk" %}
 
     <script
       type="module"

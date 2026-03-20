@@ -17,10 +17,10 @@
   {% if page.url == '/en/about/' or page.url == '/fr/a-propos/' %}
   <gcds-breadcrumbs slot="breadcrumb">
     {% if lang == 'fr' %}
-    <gcds-breadcrumbs-item href="/fr/">Accueil</gcds-breadcrumbs-item>
+    <gcds-breadcrumbs-item href="/fr/">{{ site.titleFr }}</gcds-breadcrumbs-item>
     <gcds-breadcrumbs-item href="/fr/a-propos/">A propos</gcds-breadcrumbs-item>
     {% else %}
-    <gcds-breadcrumbs-item href="/en/">Home</gcds-breadcrumbs-item>
+    <gcds-breadcrumbs-item href="/en/">{{ site.title }}</gcds-breadcrumbs-item>
     <gcds-breadcrumbs-item href="/en/about/">About</gcds-breadcrumbs-item>
     {% endif %}
   </gcds-breadcrumbs>
