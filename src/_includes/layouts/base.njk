@@ -4,7 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="{% if description %}{{ description }}{% else %}{% if lang == 'fr' %}{{ site.descriptionFr }}{% else %}{{ site.description }}{% endif %}{% endif %}" />
-    <title>{% if title %}{{ title }} | {% endif %}{% if lang == 'fr' %}{{ site.titleFr }}{% else %}{{ site.title }}{% endif %}</title>
+    {% if lang == 'fr' %}
+      {% set siteName = site.titleFr %}
+    {% else %}
+      {% set siteName = site.title %}
+    {% endif %}
+    {% if page.url == '/en/' or page.url == '/fr/' %}
+      <title>{{ siteName }}</title>
+    {% else %}
+      <title>{% if title %}{{ title }} | {% endif %}{{ siteName }}</title>
+    {% endif %}
 
     <link
       rel="stylesheet"
@@ -35,10 +44,10 @@
       {% if page.url == '/en/about/' or page.url == '/fr/a-propos/' %}
       <gcds-breadcrumbs slot="breadcrumb">
         {% if lang == 'fr' %}
-        <gcds-breadcrumbs-item href="/fr/">Accueil</gcds-breadcrumbs-item>
+        <gcds-breadcrumbs-item href="/fr/">{{ site.titleFr }}</gcds-breadcrumbs-item>
         <gcds-breadcrumbs-item href="/fr/a-propos/">A propos</gcds-breadcrumbs-item>
         {% else %}
-        <gcds-breadcrumbs-item href="/en/">Home</gcds-breadcrumbs-item>
+        <gcds-breadcrumbs-item href="/en/">{{ site.title }}</gcds-breadcrumbs-item>
         <gcds-breadcrumbs-item href="/en/about/">About</gcds-breadcrumbs-item>
         {% endif %}
       </gcds-breadcrumbs>
@@ -46,6 +55,12 @@
     </gcds-header>
 
     <gcds-container id="main-content" layout="page" tag="main">
+      {% if title %}
+      <h1>{{ title }}</h1>
+      {% endif %}
+      {% if description %}
+      <p>{{ description }}</p>
+      {% endif %}
       {{ content | safe }}
     </gcds-container>
 
