@@ -70,7 +70,7 @@ Page URLs are determined by their titles. Changing a title changes its URL. This
 
 The `otherLanguageTitle` field must exactly match the other-language page's `title` for the slugified URLs to align. A mismatch produces a broken language toggle link. This is a trade-off for not requiring a centralized translation map.
 
-Breadcrumbs in the header partial are now automatic for any non-homepage page, using `page.url` and `title`. No per-page breadcrumb configuration is needed.
+Breadcrumbs are handled by the `@11ty/eleventy-navigation` plugin (Decision 003). The `eleventyNavigation.key` and `parent` front matter fields are used to build the ancestor chain automatically at build time.
 
 ## Notes
 This decision is aligned with the planned DecapCMS integration (Phase 15+), where `title`, `description`, and `otherLanguageTitle` will be exposed as simple text widgets in the content editor.

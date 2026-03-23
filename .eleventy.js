@@ -1,6 +1,9 @@
 const { stripHtml } = require("string-strip-html");
+const navigationPlugin = require("@11ty/eleventy-navigation");
 
 module.exports = function (eleventyConfig) {
+  eleventyConfig.addPlugin(navigationPlugin);
+
   eleventyConfig.addFilter("stripTagsSlugify", function (str) {
     if (!str) return "";
     return stripHtml(str).result

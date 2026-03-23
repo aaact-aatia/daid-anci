@@ -10,19 +10,14 @@
 {% elif page.url == '/en/' or page.url == '/fr/' %}
   {% set langHref = "/" ~ otherLang ~ "/" %}
 {% endif %}
+{% if eleventyNavigation and eleventyNavigation.key %}
+  {% set crumbs = collections.all | eleventyNavigationBreadcrumb(eleventyNavigation.key) %}
+{% endif %}
 <gcds-header {% if langHref %}lang-href="{{ langHref }}"{% endif %} skip-to-href="#main-content">
   <gcds-search slot="search"></gcds-search>
-  {% if page.url != '/en/' and page.url != '/fr/' %}
   <gcds-breadcrumbs slot="breadcrumb">
-    {% if lang == 'fr' %}
-    <gcds-breadcrumbs-item href="/fr/">{{ site.titleFr }}</gcds-breadcrumbs-item>
-    {% else %}
-    <gcds-breadcrumbs-item href="/en/">{{ site.title }}</gcds-breadcrumbs-item>
-    {% endif %}
-    {% if parentPageUrl %}
-    <gcds-breadcrumbs-item href="{{ parentPageUrl }}">{{ parentPageTitle }}</gcds-breadcrumbs-item>
-    {% endif %}
-    <gcds-breadcrumbs-item href="{{ page.url }}">{{ title }}</gcds-breadcrumbs-item>
+    {% for crumb in crumbs %}
+    <gcds-breadcrumbs-item href="{{ crumb.url }}">{{ crumb.data.title or crumb.title }}</gcds-breadcrumbs-item>
+    {% endfor %}
   </gcds-breadcrumbs>
-  {% endif %}
 </gcds-header>

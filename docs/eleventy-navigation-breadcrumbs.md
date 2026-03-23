@@ -1,0 +1,117 @@
+# Decision 003: Eleventy Navigation plugin for automatic breadcrumbs
+
+## Status
+Accepted
+
+## Date
+2026-03-23
+
+## Context
+The site has a three-level page hierarchy:
+
+```
+Home  →  Section (About, Services, Resources)  →  Sub-page (individual service pages)
+```
+
+The initial breadcrumb implementation in `header.njk` was fully manual: it rendered the homepage link, then optionally a parent section link from two front matter fields (`parentPageTitle` and `parentPageUrl`), then the current page title from `title`. This worked but had two problems:
+
+1. Every sub-page needed to declare its own parent in front matter, duplicating information that is already implicit in the URL structure.
+2. Adding a new sub-page required remembering to set two extra fields correctly — a source of human error.
+
+We also wanted to be able to add a site-wide secondary navigation in the future without another custom implementation.
+
+## Decision
+Use the official [`@11ty/eleventy-navigation`](https://www.11ty.dev/docs/plugins/navigation/) plugin to manage breadcrumbs (and, in future, any site navigation menus).
+
+### How it works
+
+Each page declares a `key` and, where applicable, a `parent` in its `eleventyNavigation` front matter block:
+
+```yaml
+# Homepage (root of EN tree)
+eleventyNavigation:
+  key: home-en
+
+# Section (Services, second level)
+eleventyNavigation:
+  key: services-en
+  parent: home-en
+
+# Sub-page (third level)
+eleventyNavigation:
+  key: audits-en
+  parent: services-en
+```
+
+The `header.njk` partial uses the `eleventyNavigationBreadcrumb` filter to build the list of ancestor pages at build time:
+
+```njk
+{% if eleventyNavigation and eleventyNavigation.key %}
+  {% set crumbs = collections.all | eleventyNavigationBreadcrumb(eleventyNavigation.key) %}
+{% endif %}
+```
+
+The filter returns all ancestors of the current page, in order from root to immediate parent. The current page itself is not included in the loop — it is the page the user is already on.
+
+Because the plugin stores each entry as `crumb.data.title` (the page's own `title` front matter value) rather than as a separate `eleventyNavigation.title` field, the template reads `crumb.data.title or crumb.title` to get the human-readable label:
+
+```njk
+{% for crumb in crumbs %}
+<gcds-breadcrumbs-item href="{{ crumb.url }}">{{ crumb.data.title or crumb.title }}</gcds-breadcrumbs-item>
+{% endfor %}
+```
+
+The `gcds-header` component automatically prepends a **Canada.ca** link as the first breadcrumb item — no manual entry is needed in this loop.
+
+The `<gcds-breadcrumbs>` slot is only rendered when `crumbs` has at least one entry — homepages have no parent, so no slot is provided. Canada.ca still appears via the built-in `gcds-header` behaviour.
+
+### Key naming convention
+
+Keys follow the pattern `{slug}-{lang}` — for example `home-en`, `services-fr`, `audits-en`. This keeps the EN and FR navigation trees fully separate, which is necessary because their page titles, URLs, and ancestor chains differ.
+
+### Front matter for authors
+
+| Field | Required | Purpose |
+|---|---|---|
+| `eleventyNavigation.key` | All pages that need breadcrumbs | Unique ID for this page in the nav graph |
+| `eleventyNavigation.parent` | All non-homepage pages | ID of this page's parent — omit only on homepages |
+
+The two separate `parentPageTitle` and `parentPageUrl` fields used in the previous implementation are no longer needed and have been removed from all service sub-pages.
+
+### Existing front matter for language switching is unchanged
+
+`otherLanguageTitle` and `otherLanguageUrl` are still used by the header partial to compute the language toggle link. They are a separate concern from breadcrumbs and are unaffected by this change.
+
+### Example: Accessibility audits sub-page (EN)
+
+```yaml
+title: Accessibility audits
+permalink: /en/services/accessibility-audits/
+otherLanguageUrl: /fr/services/audits-d-accessibilite/
+eleventyNavigation:
+  key: audits-en
+  parent: services-en
+```
+
+Generated breadcrumbs:
+
+```
+Canada.ca  →  Digital Accessibility and Inclusive Design  →  Services
+```
+
+(Canada.ca is injected automatically by `gcds-header`. The current page — Accessibility audits — is not repeated in the trail.)
+
+## Rationale
+The official plugin is maintained alongside Eleventy itself. It uses `collections.all`, which is already available in every template, so there is no additional data-fetching cost. It eliminates the need for authors to manually declare parent page metadata on each sub-page.
+
+The plugin also supports `eleventyNavigationToHtml` and `eleventyNavigationToMarkdown` filters, which can generate full navigation menus from the same front matter data. This means the investment in front matter keys now also enables site-wide navigation menus in a future phase without any schema changes.
+
+## Implications
+Every page that should appear in the navigation tree must declare `eleventyNavigation.key`. Pages without this field produce no breadcrumbs and would not appear in any navigation menu generated by the plugin.
+
+Changing a page's key would break the parent chain for any sub-pages that declare it as their parent. Keys should be treated as stable identifiers — not changed once set.
+
+The plugin stores the page title in `crumb.data.title`. If `eleventyNavigation.title` is set explicitly, it takes priority over `crumb.data.title`. This project does not set `eleventyNavigation.title` — page titles come from the `title` front matter field.
+
+## Notes
+DecapCMS integration (a future phase) should expose `eleventyNavigation.key` and `eleventyNavigation.parent` as hidden or read-only fields, since they are structural identifiers that content authors should not change freely.
