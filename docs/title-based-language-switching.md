@@ -35,7 +35,7 @@ Use a `stripTagsSlugify` filter to derive both the page permalink and the langua
    ```
    If `otherLanguageTitle` is not set and the page is not a homepage, the language toggle link is omitted entirely from the header. This prevents broken links for pages that don't yet have a translation.
 
-3. **The `stripTagsSlugify` filter** strips HTML tags (via `string-strip-html`), transliterates French accented characters to ASCII, removes non-alphanumeric characters, and hyphenates. This ensures the same filter produces matching slugs on both sides of the language pair.
+3. **The `stripTagsSlugify` filter** strips HTML tags (via `string-strip-html`), transliterates French accented characters to ASCII, converts apostrophes (straight and curly) to spaces so they act as word boundaries, removes remaining non-alphanumeric characters, and hyphenates. This ensures the same filter produces matching, readable slugs on both sides of the language pair.
 
 ### Front matter for authors
 
@@ -56,7 +56,7 @@ otherLanguageTitle: A propos d'ANCI
 ```
 
 - Permalink: `/en/about-daid/`
-- Language toggle: `/fr/a-propos-danci/`
+- Language toggle: `/fr/a-propos-d-anci/`
 
 ## Rationale
 The title is the single source of truth for both the URL and the cross-language link. Adding a new page requires only setting `title`, `description`, and `otherLanguageTitle` in front matter. No template files need to be edited.
