@@ -3,7 +3,9 @@
 {% else %}
   {% set otherLang = "en" %}
 {% endif %}
-{% if otherLanguageTitle %}
+{% if otherLanguageUrl %}
+  {% set langHref = otherLanguageUrl %}
+{% elif otherLanguageTitle %}
   {% set langHref = "/" ~ otherLang ~ "/" ~ (otherLanguageTitle | stripTagsSlugify) ~ "/" %}
 {% elif page.url == '/en/' or page.url == '/fr/' %}
   {% set langHref = "/" ~ otherLang ~ "/" %}
@@ -16,6 +18,9 @@
     <gcds-breadcrumbs-item href="/fr/">{{ site.titleFr }}</gcds-breadcrumbs-item>
     {% else %}
     <gcds-breadcrumbs-item href="/en/">{{ site.title }}</gcds-breadcrumbs-item>
+    {% endif %}
+    {% if parentPageUrl %}
+    <gcds-breadcrumbs-item href="{{ parentPageUrl }}">{{ parentPageTitle }}</gcds-breadcrumbs-item>
     {% endif %}
     <gcds-breadcrumbs-item href="{{ page.url }}">{{ title }}</gcds-breadcrumbs-item>
   </gcds-breadcrumbs>
