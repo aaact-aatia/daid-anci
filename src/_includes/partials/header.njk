@@ -4,11 +4,11 @@
   {% set otherLang = "en" %}
 {% endif %}
 {% if otherLanguageUrl %}
-  {% set langHref = otherLanguageUrl %}
+  {% set langHref = otherLanguageUrl | url %}
 {% elif otherLanguageTitle %}
-  {% set langHref = "/" ~ otherLang ~ "/" ~ (otherLanguageTitle | stripTagsSlugify) ~ "/" %}
-{% elif page.url == '/en/' or page.url == '/fr/' %}
-  {% set langHref = "/" ~ otherLang ~ "/" %}
+  {% set langHref = ("/" ~ otherLang ~ "/" ~ (otherLanguageTitle | stripTagsSlugify) ~ "/") | url %}
+{% elif page.url == ('/en/' | url) or page.url == ('/fr/' | url) %}
+  {% set langHref = ("/" ~ otherLang ~ "/") | url %}
 {% endif %}
 {% if eleventyNavigation and eleventyNavigation.key %}
   {% set crumbs = collections.all | eleventyNavigationBreadcrumb(eleventyNavigation.key) %}

@@ -6,16 +6,16 @@ eleventyExcludeFromCollections: true
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0; url=/en/" />
+    <meta http-equiv="refresh" content="0; url={{ '/en/' | url }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecting to English</title>
-    <link rel="canonical" href="/en/" />
+    <link rel="canonical" href="{{ '/en/' | url }}" />
     <script>
-      window.location.replace("/en/");
+      window.location.replace("{{ '/en/' | url }}");
     </script>
   </head>
   <body>
     <p>Redirecting to the English homepage...</p>
-    <p>If you are not redirected automatically, go to <a href="/en/">/en/</a>.</p>
+    <p>If you are not redirected automatically, go to <a href="{{ '/en/' | url }}">/en/</a>.</p>
   </body>
 </html>

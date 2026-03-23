@@ -1,6 +1,8 @@
 const { stripHtml } = require("string-strip-html");
 const navigationPlugin = require("@11ty/eleventy-navigation");
 
+const pathPrefix = process.env.ELEVENTY_PATH_PREFIX || "/";
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(navigationPlugin);
 
@@ -26,6 +28,7 @@ module.exports = function (eleventyConfig) {
   });
 
   return {
+    pathPrefix,
     dir: {
       input: "src",
       includes: "_includes",
