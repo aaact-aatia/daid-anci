@@ -1,28 +1,23 @@
-{% if lang == 'fr' %}
-  {% if page.url == '/fr/a-propos/' %}
-    {% set langHref = '/en/about/' %}
-  {% else %}
-    {% set langHref = '/en/' %}
-  {% endif %}
+{% if lang == "en" %}
+  {% set otherLang = "fr" %}
 {% else %}
-  {% if page.url == '/en/about/' %}
-    {% set langHref = '/fr/a-propos/' %}
-  {% else %}
-    {% set langHref = '/fr/' %}
-  {% endif %}
+  {% set otherLang = "en" %}
 {% endif %}
-
-<gcds-header lang-href="{{ langHref }}" skip-to-href="#main-content">
+{% if otherLanguageTitle %}
+  {% set langHref = "/" ~ otherLang ~ "/" ~ (otherLanguageTitle | stripTagsSlugify) ~ "/" %}
+{% elif page.url == '/en/' or page.url == '/fr/' %}
+  {% set langHref = "/" ~ otherLang ~ "/" %}
+{% endif %}
+<gcds-header {% if langHref %}lang-href="{{ langHref }}"{% endif %} skip-to-href="#main-content">
   <gcds-search slot="search"></gcds-search>
-  {% if page.url == '/en/about/' or page.url == '/fr/a-propos/' %}
+  {% if page.url != '/en/' and page.url != '/fr/' %}
   <gcds-breadcrumbs slot="breadcrumb">
     {% if lang == 'fr' %}
     <gcds-breadcrumbs-item href="/fr/">{{ site.titleFr }}</gcds-breadcrumbs-item>
-    <gcds-breadcrumbs-item href="/fr/a-propos/">A propos</gcds-breadcrumbs-item>
     {% else %}
     <gcds-breadcrumbs-item href="/en/">{{ site.title }}</gcds-breadcrumbs-item>
-    <gcds-breadcrumbs-item href="/en/about/">About</gcds-breadcrumbs-item>
     {% endif %}
+    <gcds-breadcrumbs-item href="{{ page.url }}">{{ title }}</gcds-breadcrumbs-item>
   </gcds-breadcrumbs>
   {% endif %}
 </gcds-header>
