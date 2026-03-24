@@ -8,14 +8,14 @@
       {% set entryTitle = entry.data.title or entry.title %}
       {% set overviewLabel = (entryTitle + " overview") if lang == "en" else ("Aperçu — " + entryTitle) %}
       {% set isInGroup = (eleventyNavigation.parent == entry.key) or (eleventyNavigation.key == entry.key) %}
-      <gcds-nav-group open-trigger="{{ entryTitle }}" href="{{ entry.url }}"{% if isInGroup %} open{% endif %}>
-        <gcds-nav-link href="{{ entry.url }}"{% if page.url == entry.url %} current{% endif %}>{{ overviewLabel }}</gcds-nav-link>
+      <gcds-nav-group open-trigger="{{ entryTitle }}" href="{{ entry.url | url }}"{% if isInGroup %} open{% endif %}>
+        <gcds-nav-link href="{{ entry.url | url }}"{% if page.url == entry.url %} current{% endif %}>{{ overviewLabel }}</gcds-nav-link>
         {% for child in entry.children %}
-          <gcds-nav-link href="{{ child.url }}"{% if page.url == child.url %} current{% endif %}>{{ child.data.title or child.title }}</gcds-nav-link>
+          <gcds-nav-link href="{{ child.url | url }}"{% if page.url == child.url %} current{% endif %}>{{ child.data.title or child.title }}</gcds-nav-link>
         {% endfor %}
       </gcds-nav-group>
     {% else %}
-      <gcds-nav-link href="{{ entry.url }}"{% if page.url == entry.url %} current{% endif %}>{{ entry.data.title or entry.title }}</gcds-nav-link>
+      <gcds-nav-link href="{{ entry.url | url }}"{% if page.url == entry.url %} current{% endif %}>{{ entry.data.title or entry.title }}</gcds-nav-link>
     {% endif %}
   {% endfor %}
 </gcds-side-nav>
