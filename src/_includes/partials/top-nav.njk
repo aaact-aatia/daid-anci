@@ -1,0 +1,11 @@
+{% set homeKey = "home-" + lang %}
+{% set topNavTree = collections.all | eleventyNavigation(homeKey) %}
+{% set navLabel = site.title if lang == "en" else site.titleFr %}
+{% set homeUrl = ("/" + lang + "/") | url %}
+
+<gcds-top-nav slot="menu" label="{{ navLabel }}" alignment="end">
+  <gcds-nav-link href="{{ homeUrl }}" slot="home">{{ navLabel }}</gcds-nav-link>
+  {% for entry in topNavTree %}
+    <gcds-nav-link href="{{ entry.url | url }}"{% if page.url == entry.url %} current{% endif %}>{{ entry.data.title or entry.title }}</gcds-nav-link>
+  {% endfor %}
+</gcds-top-nav>

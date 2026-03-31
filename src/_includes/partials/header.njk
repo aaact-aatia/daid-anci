@@ -15,6 +15,9 @@
 {% endif %}
 <gcds-header {% if langHref %}lang-href="{{ langHref }}"{% endif %} skip-to-href="#main-content">
   <gcds-search slot="search"></gcds-search>
+    {% if eleventyNavigation %}
+      {% include "partials/top-nav.njk" %}
+    {% endif %}
   <gcds-breadcrumbs slot="breadcrumb">
     {% for crumb in crumbs %}
     <gcds-breadcrumbs-item href="{{ crumb.url | url }}">{{ crumb.data.title or crumb.title }}</gcds-breadcrumbs-item>
